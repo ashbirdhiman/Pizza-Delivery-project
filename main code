@@ -1,0 +1,690 @@
+#include<iostream>
+using namespace std;  
+
+static int count = (0); 
+static int count_t = (0); 
+static int count_p = (0); 
+static int count_m = (0); 
+static int count_g = (0); 
+
+static int size1;//tracks order number;
+long int phn;
+char mail;
+class base_pizza    //defines basic ingridients
+{
+protected:   //or they are unaccessible by child class
+unsigned int price;
+int size;
+int capscicum;
+int tomatoes;
+int mushrooms;
+int paneer;
+int corns;
+int cheese;
+
+public:
+base_pizza()   //constructor to define base prices
+    {
+    price=0;
+    
+    size=60;
+    capscicum=50;
+    tomatoes=50;
+    mushrooms=50;
+  
+    paneer=70;
+    corns=80;
+    cheese=40;
+
+    }
+
+
+    public:
+
+    int choose_base()   //choose base
+    {
+    char opt;
+
+    cout<<"\nSelect size of the pizza(S/M/L):\t";
+    cout<<"\nEnter only(S/M/L):\t";
+    
+	cin>>opt;
+
+    switch (opt)
+        {
+        case 's':
+        case 'S':
+                return 1;
+
+        case 'm':
+        case 'M':
+                return 2;
+
+        case 'l':
+        case 'L':
+                return 3;
+
+        default:
+                return 1;
+        }
+    }
+
+    int admin_edit()
+        {
+        int edit;
+        cout<<"\nEnter New value:\t";
+        cin>>edit;
+        return edit;
+        }
+};
+
+
+class customize: public base_pizza //defines customization functions
+{
+	base_pizza b;
+protected:
+int serv_capscicum;
+int serv_tomatoes;
+int serv_mushrooms;
+int serv_olives;
+int serv_paneer;
+int serv_corns;
+int serv_cheese;
+int serv_size;
+public:
+
+customize()     //default serving of ingridients
+    {
+    serv_size=1;
+    serv_capscicum=1;
+    serv_tomatoes=1;
+    serv_mushrooms=1;
+    serv_olives=1;
+    serv_paneer=0;
+    serv_corns=0;
+    serv_cheese=1;
+    }
+
+int choose_serv()   //function to choose serving of each object
+    {
+    char x;
+       //   int serv;
+    cin>>x;
+    switch (x)
+        {
+        case 'n':
+        case 'N':
+                return 0;
+
+        case 's':
+        case 'S':
+                return 1;
+
+        case 'm':
+        case 'M':
+                return 2;
+
+        case 'l':
+        case 'L':
+                return 3;
+
+        default:
+                return 1;
+        }
+
+     // return serv;
+    }
+
+
+int ret_price()
+    {
+    return price;
+    }
+void disp_price()   //displays price
+    {
+    cout<<price;
+    }
+void disp_price_base1()   //displays price
+{
+    	base_pizza bpz;
+    	int price_d;
+		customize f;
+		
+		//int pricez=f.calc_price();
+		
+    	int sizec=size1;
+    
+		if(sizec==1)
+    	{cout<<"220";
+		}
+		else if(sizec==2)
+    	{cout<<"240";
+		}else if(sizec==3)
+    	{cout<<"260";
+		}
+		
+    }
+
+void edit_base()    //function to edit size of base
+
+    {
+    int x=b.choose_base();
+       serv_size=x;
+    }
+
+
+void edit_capscicum()   //function to edit serving of capsicum
+    {
+    int x;
+    cout<<"\nEnter the serving of Capscicum: ";
+    x=choose_serv();
+    serv_capscicum=x;
+    }
+
+void edit_tomatoes()
+    {
+    int x;
+    cout<<"\nEnter the serving of Tomatoes: ";
+    x=choose_serv();
+    serv_tomatoes=x;
+    }
+
+void edit_mushrooms()
+    {
+    int x;
+    cout<<"\nEnter the serving of Mushrooms: ";
+    x=choose_serv();
+    serv_mushrooms=x;
+    }
+
+
+void edit_paneer()
+    {
+    int x;
+    cout<<"\nEnter the serving paneer: ";
+    x=choose_serv();
+    serv_paneer=x;
+    }
+
+void edit_corns()
+    {
+    int x;
+    cout<<"\nEnter the serving of corns: ";
+    x=choose_serv();
+    serv_corns=x;
+    }
+
+void edit_cheese()
+    {
+    int x;
+    cout<<"\nEnter the serving of Cheese: ";
+    x=choose_serv();
+    serv_cheese=x;
+    }
+    
+void calc_price()   //calculates price
+    {
+    int pricet=0;   //0 to avoid junk value
+    pricet+=(serv_size)*(size);
+    pricet+=(serv_capscicum)*(capscicum);
+    pricet+=(serv_tomatoes)*(tomatoes);
+    pricet+=(serv_mushrooms)*(paneer);
+    pricet+=(serv_paneer)*(paneer);
+    pricet+=(serv_corns)*(corns);
+    pricet+=(serv_cheese)*(cheese);
+    price=pricet;
+    
+    }
+
+};
+
+class veg_extra: public customize
+{
+void veg_extra1()   //default servs for predefined pizza
+    {
+    serv_size=1;
+    serv_capscicum=2;
+    serv_tomatoes=1;
+    serv_mushrooms=2;
+  
+    serv_paneer=0;
+    serv_corns=0;
+    serv_cheese=1;
+    }
+public:
+void call() //function to call the private function for servs
+    {
+    veg_extra1();
+    }
+
+};
+char offers[8][50];
+static int ctr=0;   //keeps count of number of offers
+int pin=0;
+static long int sales=0;//total sales
+
+class admin: public base_pizza
+{
+
+int user[3];
+int pass[3];
+
+public:
+admin()     //accepted admin logins
+    {
+    user[0]=123;
+    pass[0]=321;
+    user[1]=456;
+    pass[1]=654;
+    user[2]=789;
+    pass[2]=987;
+    }
+
+int retuser(int i)
+    {
+    return user[i];
+    }
+int retpass(int i)
+    {
+    return pass[i];
+    }
+
+
+void admin_panel()
+    {
+    int r;
+admin cz;
+    admin:
+    cout<<"\t\t\tADMIN PANEL\n";
+    cout<<"\nPlease choose an option:";
+    cout<<"\n\n\n\t1.Check Total Sales";
+    cout<<"\n\n\n\t2.Add Offers";
+    cout<<"\n\n\n\t3.Edit Contact options";
+    cout<<"\n\n\n\t4.Exit Admin Panel";
+    cout<<"\n\n\n\t5.LOGOUT\n";
+    cout<<"\n-->> ";
+    cin>>r;
+
+    switch(r)
+        {
+        case 1:
+            
+            cout<<"\n\n\n";
+            cout<<"Total sales for the day have been Rs. ";
+            cout<<sales;
+        
+            break;
+
+        case 2:
+            
+            cout<<"Enter the new offer below:\n";
+            gets(offers[ctr]);
+            cout<<"\n\n\n";
+            cout<<"Offer Posted in 'Offers' section.\n";
+            ctr++;
+            
+            break;
+        
+        case 3:
+            int opt;
+			int key=1;
+            while(key==1)
+            {
+            
+            cout<<"Choose an option:\n";
+            cout<<"\n1.Edit Phone Number\n";
+            cout<<"\n2.Edit Email Adress\n";
+            cout<<"\n-->>";
+            cin>>opt;
+
+            switch(opt)
+                {
+                case 1:
+                    {
+					
+                    cout<<"\n\n";
+                    cout<<"Enter new phone number: ";
+                    cin>>phn;
+                    cout<<"\n\n";
+                    key=0;
+                    cout<<key;
+                   	cout<<"Phone Number updated"<<endl;
+               		cz.admin_panel();
+                    break;
+                    
+               		 }
+                case 2:
+                    {
+					
+                    cout<<"\n\n";
+                    cout<<"Enter new Email: ";
+                    cin>>mail;
+                    cout<<"\n\n";
+                    cout<<"Email Adress updated"<<endl;
+            		key=0;
+            		cz.admin_panel();
+                    break;
+					}
+                default:
+                	{
+					
+                    key=0;
+				}
+				cout<<key;
+                }
+                
+            }
+            
+		
+  
+        }
+
+
+    }
+
+};
+int enter_college()
+{
+	char r;
+    cout<<"\t\tChoose your College for dilevery at hub \n";
+    cout<<"\nPlease choose an option:";
+    cout<<"\n\n\n\t1.Thapar Institute of engg and technology";
+    cout<<"\n\n\n\t2. Punjabi university";
+    
+    cout<<"\n\n\n\t3. Mohindra college";
+    cout<<"\n\n\n\t4. Govt medical college";
+    
+    cout<<"\n-->> ";
+    cin>>r;
+	
+        switch (r)
+        {
+        case 'a':
+        case 'A':
+        	count_t=count_t+1;
+                return 1;
+
+        case 'B':
+        case 'b':
+        count_p=count_p+1;
+                return 2;
+
+        case 'c':
+        case 'C':
+        
+        count_m=count_m+1;
+                return 3;
+        case 'd':
+        case 'D':
+        count_g=count_g+1;
+                return 4;
+       
+
+        default:
+                return 0;
+        }
+    
+    
+
+}
+long int phno=0;
+
+int get_details()
+{
+	int choice;
+	cout<<endl;
+cout<<"Please enter the following details:";
+cout<<"\n\n";
+cout<<"Your order id : ";
+cout<<count;
+
+choice=enter_college();
+
+cout<<"\n\n";
+cout<<"Your Phone Number : ";
+cin>>phno;
+cout<<"\n\n";
+cout<<"Details successfully entered\n";
+return choice;
+}
+
+int inter()
+
+{
+	int ch,x,y,s,k;
+	base_pizza bp;
+	customize cz;
+	char adr;
+	long int phn;
+	char mail;
+
+	cout<<"\t\t\t\t------------\n";
+	cout<<"\t\t\t       *Pizza Palace*";
+	cout<<"\n\t\t\t\t------------\n";
+	
+	cout<<"\n\t\t\t  Welcome to Pizza Palace!\n";
+	count=count+1;
+	cout<<"Order No. : "<<count;
+	cout<<"\n*Please choose an option from the list:\n";
+	cout<<"\n\n\t1.Order Now!";
+	cout<<"\n\n\t2.Contact Us";
+	cout<<"\n\n\t3.About Us";
+	cout<<"\n\n\t4.Admin Login";
+	cout<<"\n\n\t5.EXIT";
+	cout<<"\n\n--->> ";
+	do
+{
+cin>>ch;
+	switch(ch)
+	{
+	case 1:
+		{
+		
+		cout<<"\n*Please choose size of pizza:\n";
+		size1=bp.choose_base();
+		cout<<size1;
+		cout<<"\n Customize Your pizza!\n";
+		cout<<"\n\n\1. Yes-i want  to customize my pizza";
+		cout<<"\n\n2. No- Just a base price pizza\a";
+
+		int ch1;
+		cin>>ch1;
+			switch(ch1)
+	        {
+	        case 1:
+	        	{
+				
+	            int r;
+	            customize ob3;
+	            
+	            cout<<"\t\t\tMake you own pizza!\n";
+	            cout<<"How to go about it:\n";
+	            cout<<"\t*Once presented with an"
+	            <<" ingredient, choose a serving:\n"
+	            <<"\t\tS - Small\n\t\tM - Medium\n"
+	            <<"\t\tL - Large\n\t\tN - Skip (remove)\n"
+	            <<"Once you complete, the final price will"
+	            <<" be displayed, if you are satisfied "
+	            <<"you\ncan continue, or you can remake "
+	            <<"the pizza\n";
+	
+	            ob3.edit_base();
+	            ob3.edit_capscicum();
+	            ob3.edit_tomatoes();
+	            ob3.edit_mushrooms();
+	           
+	            ob3.edit_paneer();
+	            ob3.edit_corns();
+	            ob3.edit_cheese();
+	
+	            ob3.calc_price();
+	
+	            cout<<"\n\nYour Order sums up at Rs. ";
+	            ob3.disp_price();
+	
+	            cout<<"\n\n\nYour order sums up to Rs. ";
+	            ob3.disp_price();
+	           
+	            get_details();
+	            cout<<"\nThank you for ordering\n";
+	            cout<<"\nPlease keep Rs. ";
+	            ob3.disp_price();
+	            cout<<" ready with you.";
+	            cout<<"\nYour order will arrive under"
+	            <<" 45 mins, or its free!";
+	            count++;
+	            sales+=ob3.ret_price();
+	            inter();
+	
+	               break;
+	        
+	        }
+	            case 2:
+				{
+	
+	                veg_extra ob1;
+	                
+	                ob1.call();
+	                
+	                cout<<"\nYou selected for base prize pizza "; 
+	                cout<<endl;
+	                
+	              
+	               cout<<"\nAmount Due: Rs.";
+	                
+	                ob1.disp_price_base1();
+	                get_details();
+	                cout<<"\n\t\t\tThank you for"
+	                <<" ordering\n";
+	                cout<<"\t\t\tPlease keep Rs. ";
+	                ob1.disp_price_base1();
+	                cout<<" ready.";
+	                cout<<"\n*Your order will arrive"
+	                <<" in under 45 mins, or its free!";
+	                cout<<endl;
+	                inter();
+	                count++;
+	                sales+=ob1.ret_price();
+	                  break;
+	            }
+	            default :
+	            	{
+	            		cout<<"enter a valid option";
+					}
+	            	
+				break;
+			}
+			break;
+	}
+	   case 2:
+     {
+		  
+        cout<<"\t\t\t\tCONTACT US";
+        cout<<"\n\n\n";
+        cout<<"ADDRESS: Clirrion Pizza ,SCO-77,LEELA BHAVAN,PATIALA";
+        
+        cout<<endl<<endl<<endl;
+        cout<<"Place order on phone:-\n";
+        cout<<"\tPhone Number :90234-90234 ";
+       
+        cout<<"\n\n";
+        cout<<endl<<endl;
+        cout<<"Email :clirrionpizza@gmail.com";
+        
+		
+       
+        break;
+        inter();
+    }
+    case 3:
+        {
+		
+        cout<<"\t\t\t\tAbout\n\n";
+        cout<<"This program has been made by Ashbir Singh Dhiman"
+        <<" and Talwinder Singh "
+		<<"for Data structure"
+        <<" Project  for 4th sem" 
+		<<"101783007 and 101603347";
+        break;
+		}
+	case 4:
+		{
+		
+			admin log;
+        if(pin!=0)
+            {
+            
+            cout<<"\nYou are already logged in\n";
+            
+            log.admin_panel();
+            }
+        else if(pin==0)
+            {
+            int id,cred;
+            
+            cout<<"\t\t\tADMIN LOGIN";
+            cout<<"\n\n\n";
+            cout<<"\t\t\t";
+               cout<<"USER ID: ";
+            cin>>id;
+            for(int i=0;i<3;++i)
+                {
+                if(id==log.retuser(i))
+                    {
+
+                    cout<<"\n\t\t\t";
+                    cout<<"PASSWORD: ";
+                    cin>>cred;
+
+                    if(cred==log.retpass(i))
+                        {
+                        pin=1;
+                        log.admin_panel();
+                        
+                        }
+                    else
+                        {
+                        cout<<"\n\t\t\t";
+                        cout<<"Password "
+                        <<"doesn't match\n";
+                        
+                         
+                        }
+				}
+                    
+                else
+                    {
+                    continue;
+                    }
+            }
+
+
+            }
+        		inter();
+     			}
+	case 5:
+		{cout<<"5";
+			return 0;
+			
+			break;
+			
+		}
+		
+	}	
+	
+}
+while(true);
+
+
+
+}
+int main()
+{
+int exit=inter();
+cout<<exit;
+if(exit==0)
+{
+return 0;
+}
+
+}
